@@ -6,21 +6,22 @@ if [[ -z "${BASE_DIR}" ]]; then
     BASE_DIR="/app"
 fi
 
-if [[ -z "${PROXY_LIST_URL}" ]]; then
-    echo "Using mounted proxy list"
-    touch $BASE_DIR/proxy-list.txt
-    echo " ---> Done"
-elif [[ -z "${BRIGHT_DATA_API_TOKEN}"]]; then
-    echo "Downloading proxy list from $PROXY_LIST_URL"
-    curl -s $PROXY_LIST_URL > $BASE_DIR/proxy-list.txt
-    echo " ---> Done"
-else
-    echo "Downloading proxy list from $PROXY_LIST_URL"
-    curl -s -H "Authorization: Bearer $BRIGHT_DATA_API_TOKEN" "$PROXY_LIST_URL" > $BASE_DIR/proxy-list.txt
+if [[ -n "${BRIGHT_DATA_API_TOKEN}" && -n "${BRIGHT_DATA_USERNAME}" && -n "${BRIGHT_DATA_PASSWORD}" && -n "${BRIGHT_DATA_ZONE}" ]]; then
+    BRIGHT_DATA_URL="https://api.brightdata.com/zone/route_ips?zone=$BRIGHT_DATA_ZONE"
+    echo "Downloading proxy list from $BRIGHT_DATA_URL"
+    curl -s -H "Authorization: Bearer $BRIGHT_DATA_API_TOKEN" "$BRIGHT_DATA_URL" > $BASE_DIR/proxy-list.txt
     echo "Correctly formatting proxy list file"
     # Builds the URL with the username, password and the endpoint of Bright Data
     SUBSTITUTION_PATTERN="s/^.*/http:\/\/${BRIGHT_DATA_USERNAME}-ip-&:${BRIGHT_DATA_PASSWORD}@brd.superproxy.io:22225/"
     sed -i $SUBSTITUTION_PATTERN $BASE_DIR/proxy-list.txt
+    echo " ---> Done"
+elif [[ -z "${PROXY_LIST_URL}" ]]; then
+    echo "Using mounted proxy list"
+    touch $BASE_DIR/proxy-list.txt
+    echo " ---> Done"
+else
+    echo "Downloading proxy list from $PROXY_LIST_URL"
+    curl -s $PROXY_LIST_URL > $BASE_DIR/proxy-list.txt
     echo " ---> Done"
 fi
 
