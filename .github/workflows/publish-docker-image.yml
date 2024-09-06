@@ -6,6 +6,8 @@ on:
       - "README.md"
     branches:
       - "main"
+    tags:
+      - "v*"
 
 env:
   REGISTRY: ghcr.io
