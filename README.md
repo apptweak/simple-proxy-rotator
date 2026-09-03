@@ -25,28 +25,33 @@ The proxy list can be configured in two ways :
 
 The proxy list should have 1 proxy per line using the following format : `http://[username]:[password]@[host]:[port]`. Example
 
-````
+```
 http://user1:password1@12.34.56.78:1111
 http://user2:password2@98.76.54.32:2222
 ...
-````
+```
 
 ## Usage
 
 ### Start the container using a downloadable proxy list
 
 ````
-docker run -p 1234:15000 -e PROXY_LIST_URL=https://gist.githubusercontent.com/you/private-gist-hash/raw/proxy-list.txt almathie/simple-proxy-rotator
-````
+docker build . -f Dockerfile -t apptweak/simplpe-proxy-rotator
+```
+
+
+```
+docker run -p 1234:15000 -e PROXY_LIST_URL=https://gist.githubusercontent.com/you/private-gist-hash/raw/proxy-list.txt apptweak/simple-proxy-rotator
+```
 
 ### Start the container using a volume mounted proxy list
 
-````
-docker run -p 1234:15000 -v /path/to/proxy-list.txt:/app/proxy-list.txt almathie/simple-proxy-rotator
-````
+```
+docker run -p 1234:15000 -v /path/to/proxy-list.txt:/app/proxy-list.txt apptweak/simple-proxy-rotator
+```
 
 ### Use the rotator
 
-````
+```
 curl -x "http://127.0.0.1:1234" "https://google.com"
-````
+```
