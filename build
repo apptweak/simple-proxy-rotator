@@ -12,7 +12,7 @@ gemfile do
   # Checkout this wiki to know how to config your bundle
   # https://github.com/apptweak/docs/wiki/How-to-release-a-new-version-of-a-gem#fetch-gems
   source "https://rubygems.pkg.github.com/apptweak" do
-    gem "apptweak-utils", ">= 18.1.0.beta.1", require: false
+    gem "apptweak-utils", ">= 18.1.0", require: false
   end
 end
 require "apptweak-utils/image_builder"
