@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# This is specific per project
+REPO = "362072154386.dkr.ecr.eu-west-1.amazonaws.com/simple-proxy-rotator"
+
+require "bundler/inline"
+gemfile do
+  source "https://rubygems.org"
+
+  # INFO: Authentication required to fetch gems from this source
+  # Checkout this wiki to know how to config your bundle
+  # https://github.com/apptweak/docs/wiki/How-to-release-a-new-version-of-a-gem#fetch-gems
+  source "https://rubygems.pkg.github.com/apptweak" do
+    gem "apptweak-utils", ">= 18.1.0.beta.1", require: false
+  end
+end
+require "apptweak-utils/image_builder"
+
+builder = ImageBuilder.new(ARGV, REPO)
+builder.build
