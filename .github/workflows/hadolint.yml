@@ -1,0 +1,22 @@
+name: Hadolint
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "Dockerfile"
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - "Dockerfile"
+
+jobs:
+  hadolint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hadolint/hadolint-action@v1.6.0
+        with:
+          dockerfile: Dockerfile
+          ignore: DL3018

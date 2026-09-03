@@ -1,0 +1,18 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "enabledManagers": ["dockerfile"],
+    "labels": ["dependencies", "renovate", "docker"],
+    "prConcurrentLimit": 5,
+    "rangeStrategy": "bump",
+    "separateMinorPatch": true,
+    "packageRules": [
+      {
+        "matchUpdateTypes": ["major"],
+        "enabled": false
+      }
+    ],
+    "dockerfile": {
+      "updateFiles": ["Dockerfile"],
+      "fileMatch": ["Dockerfile"]
+    }
+  }
